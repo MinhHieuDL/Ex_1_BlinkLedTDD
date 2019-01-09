@@ -30,4 +30,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Object Include="..\Ex_1_BlinkLed\Debug\ExClass.obj">
+      <Filter>Source Files</Filter>
+    </Object>
+  </ItemGroup>
 </Project>

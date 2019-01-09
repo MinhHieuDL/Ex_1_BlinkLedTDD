@@ -5,15 +5,30 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace Ex_1_BlinkLedTest
-{		
+{	
+	unsigned int LedIsON = 0;
+
+	class TestLedFake : public Iled
+	{
+		virtual void TurnOn()
+		{
+			LedIsON = 1;
+		}
+		virtual void TurnOff()
+		{
+			LedIsON = 0;
+		}
+	};
+
 	TEST_CLASS(UnitTest1)
 	{
+	private:
+		Blinker B;
+		TestLedFake fakeLed;
 	public:
-		
-		TEST_METHOD(TestMethod1)
+		TEST_METHOD(canBlinkOneTime)
 		{
-			// TODO: Your test code here
+			B.Execute(100, 200, 1);
 		}
-
 	};
 }
