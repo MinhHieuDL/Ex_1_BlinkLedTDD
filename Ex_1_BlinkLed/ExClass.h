@@ -11,14 +11,16 @@ class Blinker
 {
 private:
 	Iled *pBL;
-	unsigned int tick, onTime, offTime;
+	unsigned int tick, onTime, offTime, NuOfTime, LedState;
 	bool Count;
 public:
 	class Blinker() : tick(0)
 	{
 		Count = false;
+		LedState = false;
 		onTime = 0;
 		offTime = 0;
+		NuOfTime = 0;
 	}
 
 	void Execute(unsigned onTime_in_ms, unsigned offTime_in_ms, unsigned numberofTime);

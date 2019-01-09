@@ -4,11 +4,10 @@ void Blinker::Execute(unsigned onTime_in_ms, unsigned offTime_in_ms, unsigned nu
 {
 	onTime = onTime_in_ms;
 	offTime = offTime_in_ms;
-	if (numberofTime == 1)
-	{
-		pBL->TurnOn();
-		Count = true;
-	}
+	NuOfTime = numberofTime;
+	pBL->TurnOn();
+	Count = true;
+	LedState = true;
 }
 
 void Blinker::AttachLedHAL(Iled * pLed)
@@ -21,8 +20,42 @@ void Blinker::Tick1ms(void)
 	if (Count == true)
 	{
 		tick++;
-		if (tick == onTime)
-			pBL->TurnOff();
+		if (NuOfTime == 1)
+		{
+			if (LedState == true)
+			{
+				if (tick == onTime)
+				{
+					pBL->TurnOff();
+					Count = false;
+				}
+			}	
+		}
+		if (NuOfTime > 1)
+		{
+			if (LedState == true)
+			{
+				if (tick == onTime)
+				{
+					pBL->TurnOff();
+					LedState = false;
+					tick = 0;
+					NuOfTime--;
+				}
+			}
+			else
+			{
+				if (LedState == false)
+				{
+					if (tick == offTime)
+					{
+						pBL->TurnOn();
+						LedState = true;
+						tick = 0;
+					}
+				}
+			}
+		}
 	}
 }
 
