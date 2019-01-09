@@ -165,6 +165,11 @@
     <ClCompile Include="unittest1.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Ex_1_BlinkLed\Ex_1_BlinkLed.vcxproj">
+      <Project>{c88205b6-4e2b-43ad-be5c-7cf4c39c7cfd}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Object Include="..\Ex_1_BlinkLed\Debug\ExClass.obj" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

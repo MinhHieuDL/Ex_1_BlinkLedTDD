@@ -17,7 +17,7 @@ public:
 	class Blinker() : tick(0)
 	{
 		Count = false;
-		LedState = false;
+		LedState = 0;
 		onTime = 0;
 		offTime = 0;
 		NuOfTime = 0;
