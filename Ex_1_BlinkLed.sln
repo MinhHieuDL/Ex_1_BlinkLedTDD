@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ex_1_BlinkLed", "Ex_1_BlinkLed\Ex_1_BlinkLed.vcxproj", "{C88205B6-4E2B-43AD-BE5C-7CF4C39C7CFD}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ex_1_BlinkLedTest", "Ex_1_BlinkLedTest\Ex_1_BlinkLedTest.vcxproj", "{336864BF-4658-4C5D-92BD-E4B1F2DA16D8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{C88205B6-4E2B-43AD-BE5C-7CF4C39C7CFD}.Release|x64.Build.0 = Release|x64
 		{C88205B6-4E2B-43AD-BE5C-7CF4C39C7CFD}.Release|x86.ActiveCfg = Release|Win32
 		{C88205B6-4E2B-43AD-BE5C-7CF4C39C7CFD}.Release|x86.Build.0 = Release|Win32
+		{336864BF-4658-4C5D-92BD-E4B1F2DA16D8}.Debug|x64.ActiveCfg = Debug|x64
+		{336864BF-4658-4C5D-92BD-E4B1F2DA16D8}.Debug|x64.Build.0 = Debug|x64
+		{336864BF-4658-4C5D-92BD-E4B1F2DA16D8}.Debug|x86.ActiveCfg = Debug|Win32
+		{336864BF-4658-4C5D-92BD-E4B1F2DA16D8}.Debug|x86.Build.0 = Debug|Win32
+		{336864BF-4658-4C5D-92BD-E4B1F2DA16D8}.Release|x64.ActiveCfg = Release|x64
+		{336864BF-4658-4C5D-92BD-E4B1F2DA16D8}.Release|x64.Build.0 = Release|x64
+		{336864BF-4658-4C5D-92BD-E4B1F2DA16D8}.Release|x86.ActiveCfg = Release|Win32
+		{336864BF-4658-4C5D-92BD-E4B1F2DA16D8}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
