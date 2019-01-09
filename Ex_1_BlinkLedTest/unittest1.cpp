@@ -28,7 +28,13 @@ namespace Ex_1_BlinkLedTest
 	public:
 		TEST_METHOD(canBlinkOneTime)
 		{
+			B.AttachLedHAL(&fakeLed);
 			B.Execute(100, 200, 1);
+			for (unsigned i = 0; i < 100; i++)
+			{
+				B.Tick1ms();
+			}
+			Assert::IsTrue(LedIsON == 0);
 		}
 	};
 }
