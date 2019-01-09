@@ -13,6 +13,10 @@ private:
 	Iled *pBL;
 	unsigned int tick, onTime, offTime, NuOfTime, LedState;
 	bool Count;
+	void BlinkOneTime(void);
+	void BlinkMultiTimes(void);
+	void TurnOffLed(void);
+	void TurnOnLed(void);
 public:
 	class Blinker() : tick(0)
 	{
