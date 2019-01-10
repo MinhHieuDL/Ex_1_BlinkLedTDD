@@ -2,6 +2,7 @@
 
 void Blinker::Execute(unsigned onTime_in_ms, unsigned offTime_in_ms, unsigned numberofTime)
 {
+	StopFlag = false;
 	tick = 0;
 	onTime = onTime_in_ms;
 	offTime = offTime_in_ms;
@@ -22,19 +23,27 @@ void Blinker::Tick1ms(void)
 	if (Count == true)
 	{
 		tick++;
-		switch (BlForever)
+		if (StopFlag == true)
 		{
-		case true:
-			BlinkForever();
-			break;
-		case false:
-			if (NuOfTime == 1)
-				BlinkOneTime();
-			else if (NuOfTime > 1)
-				BlinkMultiTimes();
-		default:
-			break;
-		}	
+			TurnOffLed();
+			Count = false;
+		}
+		else
+		{
+			switch (BlForever)
+			{
+			case true:
+				BlinkForever();
+				break;
+			case false:
+				if (NuOfTime == 1)
+					BlinkOneTime();
+				else if (NuOfTime > 1)
+					BlinkMultiTimes();
+			default:
+				break;
+			}
+		}
 	}
 }
 
@@ -100,3 +109,7 @@ void Blinker::TurnOnLed(void)
 	tick = 0;
 }
 
+void Blinker::Stop(void)
+{
+	StopFlag = true;
+}
