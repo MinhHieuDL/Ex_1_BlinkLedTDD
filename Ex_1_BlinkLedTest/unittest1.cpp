@@ -34,7 +34,7 @@ namespace Ex_1_BlinkLedTest
 				blinker.Tick1ms();
 		}
 
-		void CheckLedIsOFF(unsigned int onTime)
+		void checkLedIsOFF(unsigned int onTime)
 		{
 			callTick1ms(onTime - DIFFERENTIAL);
 			Assert::IsTrue(fakeLed.LedIsON == true);
@@ -42,7 +42,7 @@ namespace Ex_1_BlinkLedTest
 			Assert::IsTrue(fakeLed.LedIsON == false);
 		}
 
-		void CheckLedIsON(unsigned int offTime)
+		void checkLedIsON(unsigned int offTime)
 		{
 			callTick1ms(offTime - DIFFERENTIAL);
 			Assert::IsTrue(fakeLed.LedIsON == false);
@@ -50,40 +50,39 @@ namespace Ex_1_BlinkLedTest
 			Assert::IsTrue(fakeLed.LedIsON == true);
 		}
 	public:
-
-		TEST_METHOD(canBlinkOneTime)
+		UnitTest1()
 		{
 			blinker.AttachLedHAL(&fakeLed);
+		}
+		TEST_METHOD(canBlinkOneTime)
+		{	
 			blinker.Execute(100, 200, 1);
 			Assert::IsTrue(fakeLed.LedIsON == true);
-			CheckLedIsOFF(100);
+			checkLedIsOFF(100);
 		}
 
 		TEST_METHOD(canBlinkTwoTimes)
 		{
-			blinker.AttachLedHAL(&fakeLed);
 			blinker.Execute(100, 200, 2);
 			Assert::IsTrue(fakeLed.LedIsON == true);
-			CheckLedIsOFF(100);
-			CheckLedIsON(200);
-			CheckLedIsOFF(100);
+			checkLedIsOFF(100);
+			checkLedIsON(200);
+			checkLedIsOFF(100);
 		}
 
 		TEST_METHOD(canBlinkForever)
 		{
-			blinker.AttachLedHAL(&fakeLed);
 			blinker.Execute(100, 200, 0);
 			Assert::IsTrue(fakeLed.LedIsON == true);
 			for (unsigned i = 0; i < 100; i++)
 			{
-				CheckLedIsOFF(100);
-				CheckLedIsON(200);
+				checkLedIsOFF(100);
+				checkLedIsON(200);
 			}
 		}
 
 		TEST_METHOD(canSTOP)
 		{
-			blinker.AttachLedHAL(&fakeLed);
 			blinker.Execute(100, 200, 0);
 			Assert::IsTrue(fakeLed.LedIsON == true);
 			blinker.Stop();
@@ -96,14 +95,13 @@ namespace Ex_1_BlinkLedTest
 
 		TEST_METHOD(callExecuteTwoTimeConsecutive)
 		{
-			blinker.AttachLedHAL(&fakeLed);
 			blinker.Execute(100, 200, 0);
 			callTick1ms(5000);
 			blinker.Execute(100, 200, 2);
 			Assert::IsTrue(fakeLed.LedIsON == true);
-			CheckLedIsOFF(100);
-			CheckLedIsON(200);
-			CheckLedIsOFF(100);
+			checkLedIsOFF(100);
+			checkLedIsON(200);
+			checkLedIsOFF(100);
 			for (unsigned i = 0; i < 10000; i++)
 			{
 				blinker.Tick1ms();
