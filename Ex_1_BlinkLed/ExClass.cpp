@@ -11,6 +11,7 @@ void Blinker::Execute(unsigned onTime_in_ms, unsigned offTime_in_ms, unsigned nu
 	LedState = 1;
 	Count = true;
 	if (numberofTime == 0) BlForever = true;
+	else BlForever = false;
 }
 
 void Blinker::AttachLedHAL(Iled * pLed)

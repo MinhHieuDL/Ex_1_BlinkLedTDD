@@ -25,17 +25,30 @@ namespace Ex_1_BlinkLedTest
 	private:
 		Blinker B;
 		TestLedFake fakeLed;
+		void callTick1ms(unsigned int times)
+		{
+			for (unsigned i = 0; i < times; i++)
+			{
+				B.Tick1ms();
+			}
+		}
+		void CheckLedIsOFF(unsigned int onTime)
+		{
+			callTick1ms(onTime);
+			Assert::IsTrue(LedIsON == 0);
+		}
+		void CheckLedIsON(unsigned int offTime)
+		{
+			callTick1ms(offTime);
+			Assert::IsTrue(LedIsON == 1);
+		}
 	public:
 		TEST_METHOD(canBlinkOneTime)
 		{
 			B.AttachLedHAL(&fakeLed);
 			B.Execute(100, 200, 1);
 			Assert::IsTrue(LedIsON == 1);
-			for (unsigned i = 0; i < 100; i++)
-			{
-				B.Tick1ms();
-			}
-			Assert::IsTrue(LedIsON == 0);
+			CheckLedIsOFF(100);
 		}
 
 		TEST_METHOD(canBlinkTwoTimes)
@@ -43,15 +56,9 @@ namespace Ex_1_BlinkLedTest
 			B.AttachLedHAL(&fakeLed);
 			B.Execute(100, 200, 2);
 			Assert::IsTrue(LedIsON == 1);
-			for(unsigned int j = 0; j < 100; j++)
-				B.Tick1ms();
-			Assert::IsTrue(LedIsON == 0);
-			for (unsigned int k = 0; k < 200; k++)
-				B.Tick1ms();
-			Assert::IsTrue(LedIsON == 1);
-			for (unsigned int j = 0; j < 100; j++)
-				B.Tick1ms();
-			Assert::IsTrue(LedIsON == 0);
+			CheckLedIsOFF(100);
+			CheckLedIsON(200);
+			CheckLedIsOFF(100);
 		}
 
 		TEST_METHOD(canBlinkForever)
@@ -61,12 +68,8 @@ namespace Ex_1_BlinkLedTest
 			Assert::IsTrue(LedIsON == 1);
 			for (unsigned i = 0; i < 100; i++)
 			{
-				for (unsigned int j = 0; j < 100; j++)
-					B.Tick1ms();
-				Assert::IsTrue(LedIsON == 0);
-				for (unsigned int k = 0; k < 200; k++)
-					B.Tick1ms();
-				Assert::IsTrue(LedIsON == 1);
+				CheckLedIsOFF(100);
+				CheckLedIsON(200);
 			}
 		}
 
