@@ -22,7 +22,7 @@ int main(void)
 	DemoLed demoLed;
 	blinker.AttachLedHAL(&demoLed);
 
-	blinker.Execute(5, 10, 10);
+	blinker.Execute(10, 10, 3);
 	while (true)
 	{
 		blinker.Tick1ms();

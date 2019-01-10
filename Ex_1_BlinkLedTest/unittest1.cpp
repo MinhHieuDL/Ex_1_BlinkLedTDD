@@ -6,56 +6,64 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace Ex_1_BlinkLedTest
 {	
-	unsigned int LedIsON = 0;
-
 	class TestLedFake : public Iled
 	{
+	public:
+		bool LedIsON;
+		class TestLedFake() : LedIsON(false) {};
+
 		virtual void TurnOn()
 		{
-			LedIsON = 1;
+			LedIsON = true;
 		}
 		virtual void TurnOff()
 		{
-			LedIsON = 0;
+			LedIsON = false;
 		}
 	};
 
 	TEST_CLASS(UnitTest1)
 	{
 	private:
-		Blinker B;
+		Blinker blinker;
 		TestLedFake fakeLed;
+#define DIFFERENTIAL 5
 		void callTick1ms(unsigned int times)
 		{
 			for (unsigned i = 0; i < times; i++)
-			{
-				B.Tick1ms();
-			}
+				blinker.Tick1ms();
 		}
+
 		void CheckLedIsOFF(unsigned int onTime)
 		{
-			callTick1ms(onTime);
-			Assert::IsTrue(LedIsON == 0);
+			callTick1ms(onTime - DIFFERENTIAL);
+			Assert::IsTrue(fakeLed.LedIsON == true);
+			callTick1ms(DIFFERENTIAL);
+			Assert::IsTrue(fakeLed.LedIsON == false);
 		}
+
 		void CheckLedIsON(unsigned int offTime)
 		{
-			callTick1ms(offTime);
-			Assert::IsTrue(LedIsON == 1);
+			callTick1ms(offTime - DIFFERENTIAL);
+			Assert::IsTrue(fakeLed.LedIsON == false);
+			callTick1ms(DIFFERENTIAL);
+			Assert::IsTrue(fakeLed.LedIsON == true);
 		}
 	public:
+
 		TEST_METHOD(canBlinkOneTime)
 		{
-			B.AttachLedHAL(&fakeLed);
-			B.Execute(100, 200, 1);
-			Assert::IsTrue(LedIsON == 1);
+			blinker.AttachLedHAL(&fakeLed);
+			blinker.Execute(100, 200, 1);
+			Assert::IsTrue(fakeLed.LedIsON == true);
 			CheckLedIsOFF(100);
 		}
 
 		TEST_METHOD(canBlinkTwoTimes)
 		{
-			B.AttachLedHAL(&fakeLed);
-			B.Execute(100, 200, 2);
-			Assert::IsTrue(LedIsON == 1);
+			blinker.AttachLedHAL(&fakeLed);
+			blinker.Execute(100, 200, 2);
+			Assert::IsTrue(fakeLed.LedIsON == true);
 			CheckLedIsOFF(100);
 			CheckLedIsON(200);
 			CheckLedIsOFF(100);
@@ -63,9 +71,9 @@ namespace Ex_1_BlinkLedTest
 
 		TEST_METHOD(canBlinkForever)
 		{
-			B.AttachLedHAL(&fakeLed);
-			B.Execute(100, 200, 0);
-			Assert::IsTrue(LedIsON == 1);
+			blinker.AttachLedHAL(&fakeLed);
+			blinker.Execute(100, 200, 0);
+			Assert::IsTrue(fakeLed.LedIsON == true);
 			for (unsigned i = 0; i < 100; i++)
 			{
 				CheckLedIsOFF(100);
@@ -75,15 +83,33 @@ namespace Ex_1_BlinkLedTest
 
 		TEST_METHOD(canSTOP)
 		{
-			B.AttachLedHAL(&fakeLed);
-			B.Execute(100, 200, 0);
-			Assert::IsTrue(LedIsON == 1);
-			B.Stop();
+			blinker.AttachLedHAL(&fakeLed);
+			blinker.Execute(100, 200, 0);
+			Assert::IsTrue(fakeLed.LedIsON == true);
+			blinker.Stop();
 			for (unsigned i = 0; i < 10000; i++)
 			{
-				B.Tick1ms();
-				Assert::IsTrue(LedIsON == 0);
+				blinker.Tick1ms();
+				Assert::IsTrue(fakeLed.LedIsON == false);
 			}
 		}
+
+		TEST_METHOD(callExecuteTwoTimeConsecutive)
+		{
+			blinker.AttachLedHAL(&fakeLed);
+			blinker.Execute(100, 200, 0);
+			callTick1ms(5000);
+			blinker.Execute(100, 200, 2);
+			Assert::IsTrue(fakeLed.LedIsON == true);
+			CheckLedIsOFF(100);
+			CheckLedIsON(200);
+			CheckLedIsOFF(100);
+			for (unsigned i = 0; i < 10000; i++)
+			{
+				blinker.Tick1ms();
+				Assert::IsTrue(fakeLed.LedIsON == false);
+			}
+		}
+
 	};
 }

@@ -2,16 +2,16 @@
 
 void Blinker::Execute(unsigned onTime_in_ms, unsigned offTime_in_ms, unsigned numberofTime)
 {
-	StopFlag = false;
+	stopFlag = false;
 	tick = 0;
 	onTime = onTime_in_ms;
 	offTime = offTime_in_ms;
-	NuOfTime = numberofTime;
+	numberOfTime = numberofTime;
 	pBL->TurnOn();
-	LedState = 1;
-	Count = true;
-	if (numberofTime == 0) BlForever = true;
-	else BlForever = false;
+	ledState = 1;
+	countEnable = true;
+	if (numberofTime == 0) blinkForeverFlag = true;
+	else blinkForeverFlag = false;
 }
 
 void Blinker::AttachLedHAL(Iled * pLed)
@@ -21,26 +21,26 @@ void Blinker::AttachLedHAL(Iled * pLed)
 
 void Blinker::Tick1ms(void)
 {
-	if (Count == true)
+	if (countEnable == true)
 	{
 		tick++;
-		if (StopFlag == true)
+		if (stopFlag == true)
 		{
-			TurnOffLed();
-			Count = false;
+			turnOffLed();
+			countEnable = false;
 		}
 		else
 		{
-			switch (BlForever)
+			switch (blinkForeverFlag)
 			{
 			case true:
-				BlinkForever();
+				blinkForever();
 				break;
 			case false:
-				if (NuOfTime == 1)
-					BlinkOneTime();
-				else if (NuOfTime > 1)
-					BlinkMultiTimes();
+				if (numberOfTime == 1)
+					blinkOneTime();
+				else if (numberOfTime > 1)
+					blinkMultiTimes();
 			default:
 				break;
 			}
@@ -48,69 +48,69 @@ void Blinker::Tick1ms(void)
 	}
 }
 
-void Blinker::BlinkOneTime(void)
+void Blinker::blinkOneTime(void)
 {
-	if (LedState == 1)
+	if (ledState == 1)
 	{
 		if (tick == onTime)
 		{
-			TurnOffLed();
-			Count = false;
+			turnOffLed();
+			countEnable = false;
 		}
 	}
-	else if (LedState == 0)
+	else if (ledState == 0)
 	{
 		if (tick == offTime)
-			TurnOnLed();
+			turnOnLed();
 	}
 }
 
-void Blinker::BlinkMultiTimes(void)
+void Blinker::blinkMultiTimes(void)
 {
-	if (LedState == 1)
+	if (ledState == 1)
 	{
 		if (tick == onTime)
 		{
-			TurnOffLed();
-			NuOfTime--;
+			turnOffLed();
+			numberOfTime--;
 		}
 	}
-	else if (LedState == 0)
+	else if (ledState == 0)
 	{
 		if (tick == offTime)
-			TurnOnLed();
+			turnOnLed();
 	}
 }
 
-void Blinker::BlinkForever(void)
+void Blinker::blinkForever(void)
 {
-	if (LedState == 1)
+	if (ledState == 1)
 	{
 		if (tick == onTime)
-			TurnOffLed();
+			turnOffLed();
 	}
-	else if (LedState == 0)
+	else if (ledState == 0)
 	{
 		if (tick == offTime)
-			TurnOnLed();
+			turnOnLed();
 	}
 }
 
-void Blinker::TurnOffLed(void)
+void Blinker::turnOffLed(void)
 {
 	pBL->TurnOff();
-	LedState = 0;
+	ledState = 0;
 	tick = 0;
 }
 
-void Blinker::TurnOnLed(void)
+void Blinker::turnOnLed(void)
 {
 	pBL->TurnOn();
-	LedState = 1;
+	ledState = 1;
 	tick = 0;
 }
 
 void Blinker::Stop(void)
 {
-	StopFlag = true;
+	stopFlag = true;
 }

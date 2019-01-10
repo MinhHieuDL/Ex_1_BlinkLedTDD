@@ -11,23 +11,23 @@ class Blinker
 {
 private:
 	Iled *pBL;
-	unsigned int tick, onTime, offTime, NuOfTime, LedState;
-	bool Count, BlForever, StopFlag;
-	void BlinkOneTime(void);
-	void BlinkMultiTimes(void);
-	void BlinkForever(void);
-	void TurnOffLed(void);
-	void TurnOnLed(void);
+	unsigned int tick, onTime, offTime, numberOfTime, ledState;
+	bool countEnable, blinkForeverFlag, stopFlag;
+	void blinkOneTime(void);
+	void blinkMultiTimes(void);
+	void blinkForever(void);
+	void turnOffLed(void);
+	void turnOnLed(void);
 public:
 	class Blinker() : tick(0)
 	{
-		Count = false;
-		BlForever = false;
-		StopFlag = false;
-		LedState = 0;
+		countEnable = false;
+		blinkForeverFlag = false;
+		stopFlag = false;
+		ledState = 0;
 		onTime = 0;
 		offTime = 0;
-		NuOfTime = 0;
+		numberOfTime = 0;
 	}
 
 	void Execute(unsigned onTime_in_ms, unsigned offTime_in_ms, unsigned numberofTime);
