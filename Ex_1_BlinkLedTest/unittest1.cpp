@@ -53,5 +53,21 @@ namespace Ex_1_BlinkLedTest
 				B.Tick1ms();
 			Assert::IsTrue(LedIsON == 0);
 		}
+
+		TEST_METHOD(canBlinkForever)
+		{
+			B.AttachLedHAL(&fakeLed);
+			B.Execute(100, 200, 0);
+			Assert::IsTrue(LedIsON == 1);
+			for (unsigned i = 0; i < 100; i++)
+			{
+				for (unsigned int j = 0; j < 100; j++)
+					B.Tick1ms();
+				Assert::IsTrue(LedIsON == 0);
+				for (unsigned int k = 0; k < 200; k++)
+					B.Tick1ms();
+				Assert::IsTrue(LedIsON == 1);
+			}
+		}
 	};
 }

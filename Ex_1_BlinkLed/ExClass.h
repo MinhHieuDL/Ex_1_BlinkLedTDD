@@ -12,15 +12,17 @@ class Blinker
 private:
 	Iled *pBL;
 	unsigned int tick, onTime, offTime, NuOfTime, LedState;
-	bool Count;
+	bool Count, BlForever;
 	void BlinkOneTime(void);
 	void BlinkMultiTimes(void);
+	void BlinkForever(void);
 	void TurnOffLed(void);
 	void TurnOnLed(void);
 public:
 	class Blinker() : tick(0)
 	{
 		Count = false;
+		BlForever = false;
 		LedState = 0;
 		onTime = 0;
 		offTime = 0;
