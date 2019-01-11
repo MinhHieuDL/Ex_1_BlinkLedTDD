@@ -22,11 +22,21 @@ int main(void)
 	DemoLed demoLed;
 	blinker.AttachLedHAL(&demoLed);
 
-	blinker.Execute(10, 10, 3);
+	blinker.Execute(10, 10, 0);
 	while (true)
 	{
-		blinker.Tick1ms();
-		Sleep(100);
+		for (int i = 0; i < 100; i++)
+		{
+			blinker.Tick1ms();
+			Sleep(100);
+		}
+		printf("Call blinker.Execute(10,10,2)\n");
+		blinker.Execute(10, 10, 2);
+		for (int i = 0; i < 100; i++)
+		{
+			blinker.Tick1ms();
+			Sleep(100);
+		}
 	}
 	return 0;
 }
